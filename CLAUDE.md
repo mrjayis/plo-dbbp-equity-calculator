@@ -8,7 +8,7 @@ Single-file Monte Carlo equity calculator for PLO (Pot Limit Omaha) poker varian
 
 ## Running the App
 
-No build system. Open the HTML file directly in any modern browser (Chrome, Firefox, Safari, iOS Safari). No dependencies, no npm, no compilation.
+No build system. Open the HTML file directly in any modern browser (Chrome, Firefox, Safari, iOS Safari). No dependencies, no npm, no compilation. Also deployed on GitHub Pages: https://mrjayis.github.io/plo-dbbp-equity-calculator/
 
 ## Architecture
 
@@ -16,7 +16,7 @@ The file has three major embedded sections:
 
 1. **CSS** (~lines 6–986): Dark theme with green/cyan gradients. Key classes: `.seat`, `.board`, `.cardchip`, `#resultsTable`.
 
-2. **HTML** (~lines 1000–1373): Static structure — header, seat inputs (9), two boards (A and B, 5 cards each), results table, and modal overlays for Help/Buckets.
+2. **HTML** (~lines 1000–1373): Static structure — header, seat inputs (9), two boards (A and B, 5 cards each), results table (`#resultsTable`), and modal overlays for Help/Buckets.
 
 3. **JavaScript** (~lines 1375+): All logic, split into two logical contexts:
    - **Main thread**: DOM events, input validation, card parsing, UI state, IndexedDB scenarios, Web Worker lifecycle
