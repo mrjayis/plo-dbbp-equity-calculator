@@ -985,7 +985,6 @@ body:not(.single-board-mode) #resultsTable td.col-chop {
 
 </style>
 
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
 <title>PLO DBBP Equity Calculator</title>
@@ -1167,22 +1166,6 @@ body:not(.single-board-mode) #resultsTable td.col-chop {
 </table>
 </div>
 <div id="winHandsSummary" style="font-size:12px;color:#9fb3c8;margin:6px 0 12px"></div>
-<div id="chartSection" style="display:none; margin:4px 8px 16px">
-  <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center; flex-wrap:wrap;">
-    <label class="toggle" style="font-size:12px;">
-      <input type="checkbox" id="chartToggle">
-      <span>Chart</span>
-    </label>
-    <span id="chartTabs" style="display:none; gap:8px;">
-      <button class="btn ghost" id="chartTabEquity">Equity</button>
-      <button class="btn ghost" id="chartTabHands">Hand Classes (Board A)</button>
-    </span>
-  </div>
-  <div id="chartBody" style="display:none;">
-    <div id="equityChartDiv" style="width:100%; height:280px;"></div>
-    <div id="handsChartDiv"  style="width:100%; height:280px; display:none;"></div>
-  </div>
-</div>
 <div class="board" id="betHelper" style="margin-top:10px;">
   <!-- <h3>
     Pot Odds / MDF / SPR
@@ -3922,8 +3905,6 @@ function updateResults(labels, stats, boardA, boardB) {
       // Use *unconditional* equity contributions on each board:
       // these percentages are "share of total board equity by hand class"
       // and thus do not need to sum to 100%.
-      distA,
-      distB,
       likelyA: topHandsAbsolute(distA, trials),
       likelyB: topHandsAbsolute(distB, trials)
     });
@@ -3977,115 +3958,6 @@ const seatCellHTML = `${r.seatIdx + 1}`;
     resultsBody.appendChild(tr);
   });
 
-  renderEquityChart(rows, stats, semSingle);
-}
-
-function renderEquityChart(rows, stats, semSingle) {
-  const section    = document.getElementById('chartSection');
-  const equityDiv  = document.getElementById('equityChartDiv');
-  const handsDiv   = document.getElementById('handsChartDiv');
-  const tabEquity  = document.getElementById('chartTabEquity');
-  const tabHands   = document.getElementById('chartTabHands');
-
-  if (!section || !equityDiv || !handsDiv || typeof Plotly === 'undefined' || !rows || rows.length === 0) return;
-
-  section.style.display = '';
-
-  const playerLabels = rows.map(r => r.seatLabel);
-  const trials = stats.trials || 1;
-
-  // ── Equity traces ──────────────────────────────────────────────────────────
-  const equityTraces = [];
-  if (!semSingle) {
-    equityTraces.push({
-      name: 'Board A',
-      x: playerLabels,
-      y: rows.map(r => +(r.aVal * 100).toFixed(2)),
-      type: 'bar',
-      marker: { color: '#7bd389' },
-      hovertemplate: '%{y:.2f}%<extra>Board A</extra>'
-    });
-    equityTraces.push({
-      name: 'Board B',
-      x: playerLabels,
-      y: rows.map(r => +(r.bVal * 100).toFixed(2)),
-      type: 'bar',
-      marker: { color: '#2dd6a7' },
-      hovertemplate: '%{y:.2f}%<extra>Board B</extra>'
-    });
-  }
-  equityTraces.push({
-    name: 'Total Equity',
-    x: playerLabels,
-    y: rows.map(r => +(r.totalEq * 100).toFixed(2)),
-    type: 'bar',
-    marker: { color: '#38bdf8' },
-    hovertemplate: '%{y:.2f}%<extra>Total Equity</extra>'
-  });
-
-  // ── Hand-class traces (stacked, Board A) ──────────────────────────────────
-  const handCategoryLabels = ['High','1P','2P','Trips','Set','Str','Flush','FH','Quads','SF'];
-  const handColors = ['#475569','#7bd389','#2dd6a7','#38bdf8','#818cf8','#f59e0b','#a855f7','#ef4444','#f97316','#ec4899'];
-  const handTraces = handCategoryLabels.map((hl, ci) => ({
-    name: hl,
-    x: playerLabels,
-    y: rows.map(r => {
-      const dist = r.distA || new Array(10).fill(0);
-      return +(dist[ci] / trials * 100).toFixed(2);
-    }),
-    type: 'bar',
-    marker: { color: handColors[ci] },
-    hovertemplate: '%{y:.2f}%<extra>' + hl + '</extra>'
-  }));
-
-  // ── Shared layout ──────────────────────────────────────────────────────────
-  const baseLayout = {
-    paper_bgcolor: '#0b0f14',
-    plot_bgcolor:  '#0f1622',
-    font: { color: '#e6edf3', size: 12, family: 'Inter,ui-sans-serif,system-ui,-apple-system,Arial' },
-    margin: { t: 12, r: 12, b: 80, l: 48 },
-    legend: { orientation: 'h', y: -0.38, font: { size: 11 } },
-    xaxis: { gridcolor: '#223047', linecolor: '#223047', tickfont: { size: 11 } },
-    yaxis: { gridcolor: '#223047', linecolor: '#223047', ticksuffix: '%', rangemode: 'tozero' },
-    bargap: 0.22
-  };
-  const config = { displayModeBar: false, responsive: true };
-
-  // ── Tab helpers ────────────────────────────────────────────────────────────
-  function showEquity() {
-    equityDiv.style.display = '';
-    handsDiv.style.display  = 'none';
-    tabEquity.classList.add('primary');    tabEquity.classList.remove('ghost');
-    tabHands.classList.remove('primary'); tabHands.classList.add('ghost');
-  }
-  function showHands() {
-    handsDiv.style.display  = '';
-    equityDiv.style.display = 'none';
-    tabHands.classList.add('primary');    tabHands.classList.remove('ghost');
-    tabEquity.classList.remove('primary'); tabEquity.classList.add('ghost');
-  }
-
-  // Render both divs (Plotly.react is safe on hidden elements)
-  Plotly.react(equityDiv, equityTraces, { ...baseLayout, barmode: 'group' }, config);
-  Plotly.react(handsDiv,  handTraces,   { ...baseLayout, barmode: 'stack' }, config);
-
-  // Preserve active tab across progressive updates
-  const handsWasActive = handsDiv.style.display !== 'none';
-  tabEquity.onclick = showEquity;
-  tabHands.onclick  = showHands;
-  if (handsWasActive) { showHands(); } else { showEquity(); }
-
-  // ── Show/hide toggle ───────────────────────────────────────────────────────
-  const chartToggle = document.getElementById('chartToggle');
-  const chartBody   = document.getElementById('chartBody');
-  const chartTabs   = document.getElementById('chartTabs');
-  if (chartToggle && chartBody && chartTabs) {
-    chartToggle.onchange = function () {
-      const show = chartToggle.checked;
-      chartBody.style.display = show ? '' : 'none';
-      chartTabs.style.display = show ? 'flex' : 'none';
-    };
-  }
 }
 
 
