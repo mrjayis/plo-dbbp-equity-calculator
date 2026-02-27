@@ -425,6 +425,7 @@ h1 {
 .toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
 
 /* ── Controls rows ─────────────────────────────────── */
+#scenarioSection { margin-top: 6px; }
 .controls-extended {
   display: flex;
   gap: 8px;
@@ -1001,7 +1002,9 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 <button class="btn" id="resetBtn">Reset</button>
 <button class="btn primary" id="runBtn">Run Monte Carlo</button>
 <button class="btn ghost" disabled="" id="cancelBtn">Cancel</button>
-
+<button class="btn ghost" id="scenarioToggle" type="button" onclick="var s=document.getElementById('scenarioSection'),open=s.style.display!=='none';s.style.display=open?'none':'block';this.textContent=open?'Scenarios \u25be':'Scenarios \u25b4'">Scenarios &#x25be;</button>
+</div>
+<div id="scenarioSection" style="display:none">
 <div class="controls-extended" id="scenarioControls">
 <input id="scenarioName" placeholder="Scenario name" type="text" autocomplete="off"/>
 <button class="btn" id="saveScenario" title="Save seats/boards/settings">💾 Save</button>
@@ -1013,8 +1016,8 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 <!--<label class="btn ghost" for="importFile" title="Import JSON">⬆︎ Import</label> -->
 
 </div>
-</div>
 <div class="controls-extended" id="templateControls"> <select id="templateList" title="Preloaded 8-way scenarios"> <option value="">Templates…</option> </select> <button class="btn" id="loadTemplate">Load Template</button></div>
+</div>
 </div>
 <!-- Boards -->
 <div class="board" id="boardA">
