@@ -863,6 +863,16 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
   h1 { font-size: clamp(18px, 5.2vw, 24px); padding: 16px; }
   .wrap { padding: 0 10px; }
   .panel { border-radius: var(--r-lg); }
+}
+
+/* Portrait phones: use full screen width */
+@media (max-width: 768px) and (orientation: portrait) {
+  .wrap { padding: 0 4px; }
+  .panel { padding: 10px; border-radius: var(--r-md); }
+  h1 { padding: 12px 10px; }
+}
+
+@media (max-width: 768px) {
   .panel.results { min-height: 220px; }
   .controls-seats { grid-template-columns: repeat(6, 1fr); gap: 8px; }
   .seat { grid-column: span 6; padding: 10px; }
