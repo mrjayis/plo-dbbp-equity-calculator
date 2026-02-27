@@ -291,15 +291,14 @@ h1 {
   flex-wrap: wrap;
 }
 
-/* Card slot — card-like proportions */
-.cardin { width: 72px; }
+/* Card slot */
+.cardin { width: 56px; }
 
 .cardin input {
   width: 100%;
-  aspect-ratio: 5 / 7;
   text-transform: uppercase;
-  padding: 0;
-  border-radius: var(--r-md);
+  padding: 9px 4px;
+  border-radius: var(--r-sm);
   border: 1px solid var(--border);
   background: linear-gradient(160deg, var(--surface-2), var(--surface-0));
   color: var(--text);
@@ -307,12 +306,9 @@ h1 {
   font-family: var(--font-mono);
   font-weight: 800;
   letter-spacing: 1.5px;
-  font-size: 16px;
+  font-size: 14px;
   box-shadow: var(--elev-0), inset 0 1px 0 rgba(255,255,255,.05), inset 0 -2px 0 rgba(0,0,0,.3);
   transition: border-color .15s, box-shadow .15s, background .15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cardin input:focus {
@@ -873,8 +869,8 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
   .seat h4 { font-size: 11px; }
   .seat input { font-size: 13px; padding: 8px 10px; }
   .cards { gap: 6px; }
-  .cardin { width: clamp(56px, 14vw, 70px); }
-  .cardin input { font-size: clamp(13px, 3.8vw, 15px); border-radius: var(--r-sm); }
+  .cardin { width: clamp(44px, 11vw, 56px); }
+  .cardin input { font-size: clamp(12px, 3.4vw, 14px); }
   .cardchip { font-size: clamp(14px, 3.8vw, 18px); padding: 3px 6px; }
   .sym { font-size: clamp(11px, 3.2vw, 15px); }
   .btn { padding: 7px 10px; font-size: 12px; }
@@ -888,7 +884,7 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 @media (max-width: 560px) {
   .controls-seats { grid-template-columns: repeat(4, 1fr); }
   .seat { grid-column: span 4; }
-  .cardin { width: clamp(52px, 16vw, 66px); }
+  .cardin { width: clamp(40px, 13vw, 52px); }
 }
 
 @media (max-width: 420px) {
@@ -914,8 +910,8 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
   .seat { padding: 8px; }
   .board { padding: 6px; }
   .btn { padding: 6px 8px; }
-  .cardin { width: clamp(46px, 9vw, 64px); }
-  .cardin input { padding: 4px; }
+  .cardin { width: clamp(38px, 7vw, 52px); }
+  .cardin input { padding: 7px 3px; }
   .cardchip { font-size: clamp(12px, 2.4vw, 16px); padding: 2px 5px; }
   #resultsTable th, #resultsTable td { padding: 4px 6px; }
   #resultsFilters { top: 38px; }
