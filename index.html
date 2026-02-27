@@ -975,12 +975,11 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 
 </div>
 <div class="controls-seats" id="seats"></div>
-<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
-<div>
+<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
 <button class="btn" id="randEmptySeats">🎲 Random empty seats</button>
 <button class="btn" id="randAllSeats">🎲 Randomize all seats</button>
 </div>
-<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px">
 <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#9fb3c8;">
   Mode
   <select id="viewModeSelect" style="background:#020617;border:1px solid var(--border);border-radius:8px;color:#ffffff;padding:4px 8px;font-size:11px;">
@@ -1013,7 +1012,6 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 
 </div>
 <div class="controls-extended" id="templateControls"> <select id="templateList" title="Preloaded 8-way scenarios"> <option value="">Templates…</option> </select> <button class="btn" id="loadTemplate">Load Template</button></div>
-</div>
 </div>
 <!-- Boards -->
 <div class="board" id="boardA">
