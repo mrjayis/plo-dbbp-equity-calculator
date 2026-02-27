@@ -974,6 +974,10 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 -->
 
 </div>
+<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+<button class="btn" id="randEmptySeats">🎲 Random empty seats</button>
+<button class="btn" id="randAllSeats">🎲 Randomize all seats</button>
+</div>
 <div class="controls-seats" id="seats"></div>
 <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px">
 <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#9fb3c8;">
@@ -1702,12 +1706,6 @@ for (let i = 0; i < MAX; i++) {
   seatInputs.push(d.querySelector('input'));
   bucketGroups.push(d.querySelector('.bucketGroup'));
 }
-
-// Randomize buttons appended inside the seats grid, spanning all columns
-const _randRow = document.createElement('div');
-_randRow.style.cssText = 'grid-column: 1 / -1; display: flex; gap: 8px; padding-top: 4px;';
-_randRow.innerHTML = '<button class="btn" id="randEmptySeats">🎲 Random empty seats</button><button class="btn" id="randAllSeats">🎲 Randomize all seats</button>';
-seatsEl.appendChild(_randRow);
 
 function getBucketsForSeat(idx) {
   const grp = bucketGroups[idx];
