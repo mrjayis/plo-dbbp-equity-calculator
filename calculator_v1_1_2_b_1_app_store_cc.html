@@ -76,11 +76,12 @@ body {
 /* ── Typography ────────────────────────────────────── */
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(20px, 4vw, 30px);
+  font-size: clamp(18px, 3.5vw, 26px);
   font-weight: 800;
   letter-spacing: -0.5px;
   text-align: center;
-  padding: 28px 16px 20px;
+  padding: 12px 16px 16px;
+  margin: 0;
   background: linear-gradient(90deg, var(--accent), var(--accent-2) 55%, var(--text));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -929,28 +930,12 @@ body:not(.single-board-mode) #resultsTable td.col-chop { display: none; }
 
 </head>
 
-<body >
-    
-      <h1 style="
-  margin:0;
-  font-size:32px;
-  font-weight:700;
-  letter-spacing:0.25px;
-  text-align:center;
-  background:linear-gradient(90deg,#7bd389,#2dd6a7,#38bdf8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-">
-  ⚔️ PLO DBBP Equity ⚔️
-</h1>
-    </div>
+<body>
 
 <div class="wrap grid">
 <!-- Left column: Seats + Boards -->
 <div class="panel">
+<h1>⚔️ PLO DBBP Equity ⚔️</h1>
 <div class="controls-extended" id="cardModeControls" style="margin:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
 <label class="toggle"><input checked="" id="cardMode4" name="cardmode" type="radio" value="4"/><span>PLO</span></label>
 <label class="toggle"><input id="cardMode5" name="cardmode" type="radio" value="5"/><span>PLO5</span></label>
