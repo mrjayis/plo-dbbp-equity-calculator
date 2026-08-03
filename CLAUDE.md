@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Single-file Monte Carlo equity calculator for PLO (Pot Limit Omaha) poker variants (PLO4/PLO5/PLO6) with DBBP (Double Board Betting Poker) support. The current version is `calculator_v1_1_3_b_1_app_store_cc.html` (adds the URL-hash deep-link loader). Previous versions are retained for reference.
+Single-file Monte Carlo equity calculator for PLO (Pot Limit Omaha) poker variants (PLO4/PLO5/PLO6) with DBBP (Double Board Betting Poker) support. The current version is `calculator_v1_1_3_b_2_app_store_cc.html` (adds the URL-hash deep-link loader). Previous versions are retained for reference.
 
 ## Running the App
 

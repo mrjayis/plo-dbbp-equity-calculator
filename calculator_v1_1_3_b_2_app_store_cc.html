@@ -5671,8 +5671,9 @@ document.addEventListener('DOMContentLoaded', () => {
 //   #seats=AhKs7d2c,-,QdQh9s8s&a=Kd7h2sJc3d&b=As9c4cTh8h&n=3&cards=4&run=1
 // seats: comma-separated compact hands in seat order ("-" leaves the
 // seat empty); a/b: board A/B cards, compact; n: player count
-// (defaults to the number of filled seats); cards: 4|5|6; run=1 starts
-// the simulation immediately. Re-applies on hash change.
+// (defaults to the number of filled seats); cards: 4|5|6; sb=1 turns
+// on single-board mode (ignore Board B) — omitting it turns it off;
+// run=1 starts the simulation immediately. Re-applies on hash change.
 (function(){
   'use strict';
   function hashCards(s){
@@ -5721,6 +5722,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inp) setVal(inp, c);
       });
     });
+    const sbToggle = document.getElementById('singleBoardToggle');
+    if (sbToggle) {
+      const sb = q.get('sb') === '1';
+      if (sbToggle.checked !== sb) {
+        sbToggle.checked = sb;
+        sbToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
     if (q.get('run') === '1') setTimeout(() => runSim(), 50);
   }
   function ready(fn){
