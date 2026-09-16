@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Single-file Monte Carlo equity calculator for PLO (Pot Limit Omaha) poker variants (PLO4/PLO5/PLO6) with DBBP (Double Board Betting Poker) support. The current version is `calculator_v1_1_3_b_2_app_store_cc.html` (adds the URL-hash deep-link loader). Previous versions are retained for reference.
+Single-file Monte Carlo equity calculator for PLO (Pot Limit Omaha) poker variants (PLO4/PLO5/PLO6) with DBBP (Double Board Betting Poker) support. The current version is `calculator_v1_1_4_b_1_app_store_cc.html` (adds range syntax + the shared range library). Previous versions are retained for reference.
 
 ## Running the App
 
@@ -55,6 +55,14 @@ Scenarios saved/loaded via IndexedDB (`saveScenario`, `loadScenario`, `deleteSce
 - Wildcard rank: `Xs` (any spade)
 - Wildcard both: `Xx`
 - NOT constraint: `!AA` (no paired aces), `!SS` (no double-suited to spades)
+- Anything that isn't the classic format above is a **range** (`AA$ds`, `15%!RR`, `JRON`, `K[2s,Jc,T]`, `AsKs3s2s@40,...`). A leading `=` forces range syntax (`=AxKx` = suited AK; plain `AxKx` stays any A + any K).
+
+### Ranges
+
+- Engine: `<script id="ploRangeEngine">` exposes `window.PLORange` (`isRange`, `expand`, `tryExpand`). Grammar matches the PLO Range Analyzer (~/Downloads/plo_range_analyzer) plus bracket lists, pattern ranges (`2x3x-2x5x`), `$L`-style macros and R/O/N rank variables. Sets are Uint8Array masks over all 270,725 PLO4 hands; PLO5/6 use a 250k random sample, with pattern-built hands added for narrow ranges. `%` uses the analyzer's embedded PLO4 equity table; PLO5/6 load `plo5_equity.bin.gz` / `plo6_equity.bin.gz` (fetched lazily, parsed by `parseTable`) and cut against all hands by combo-weighted top-%. If the fetch fails (e.g. opened via file://, or no DecompressionStream) they fall back to the anchor heuristic and chips say "% estimated". The tables are built by `../plo-equity-tables` (ranker.c + pack.js).
+- `readHands()` returns `seatRanges`; `packSeatRanges()` drops hands clashing with known cards; the worker deals all range seats together in `oneOmniscient()` and redraws on collisions. A failed deal returns `false` and is retried (not counted), with an `error` message after 20k consecutive failures.
+- Library modal (📚) reads/writes the analyzer's IndexedDB (`plo_range_analyzer_v2`/`ranges`), so both apps share it on the same origin; import/export use its backup JSON.
+- Deep links: `r1`..`r9` hash params carry URL-encoded range text per seat.
 
 ### iOS/Safari Notes
 
